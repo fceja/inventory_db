@@ -1,3 +1,5 @@
-import { startDockerDesktop } from "./init_docker_deskop";
+import { startDockerDesktop } from "./StartDockerDesktop";
+import { startDockerContainer } from "./StartDockerContainer";
 
 startDockerDesktop();
+startDockerContainer();
