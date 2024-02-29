@@ -1,5 +1,5 @@
-import { startDockerDesktop } from "./StartDockerDesktop";
+import { startDockerDesktopApp } from "./StartDockerDesktop";
 import { startDockerContainer } from "./StartDockerContainer";
 
-startDockerDesktop();
+startDockerDesktopApp();
 startDockerContainer();
