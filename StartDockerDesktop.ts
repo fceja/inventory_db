@@ -1,26 +1,36 @@
-import { exec } from "child_process";
+import { execAsync } from "./ExecuteAsync";
 
-export const startDockerDesktopApp = () => {
-  const command =
-    process.platform === "win32"
-      ? 'start /min "" "docker' // windows
-      : "open -a Docker"; // macOs
+export const startDockerDesktop = async () => {
+  try {
+    const command =
+      process.platform === "win32"
+        ? 'start /min "" "docker' // windows
+        : "open -a Docker"; // macOs
 
-  exec(command, (error) => {
-    console.log("...initializing docker desktop app");
-    if (error) {
-      console.error(`error initializing docker desktop. ${error}`);
-    }
-  });
+    await execAsync(command);
+    isDockerDesktopStarted();
+    console.log("...initializing docker desktop");
+  } catch (error) {
+    console.error(`...initializing docker desktop failed -> ${error}`);
+  }
+};
 
-  const intervalId = setInterval(() => {
-    exec("docker info", (error) => {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log("...docker desktop app running");
-        clearInterval(intervalId);
+const isDockerDesktopStarted = async () => {
+  let success = false;
+
+  while (!success) {
+    try {
+      const command = "docker info";
+      const result = await execAsync(command);
+
+      if (result.includes("Client")) {
+        success = true;
+        console.log("...docker desktop running");
       }
-    });
-  }, 500);
+
+      setTimeout(() => {}, 1000);
+    } catch {
+      console.log("...docker desktop starting");
+    }
+  }
 };
