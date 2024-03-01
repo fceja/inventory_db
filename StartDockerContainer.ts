@@ -1,4 +1,4 @@
-import { exec } from "child_process";
+import { execAsync } from "./ExecuteAsync";
 import Dockerode from "dockerode";
 
 const containerName = "my-postgres-container";
@@ -6,7 +6,7 @@ const imageName = "postgres";
 const postgresPass = "POSTGRES_PASSWORD=mysecret";
 
 /* initalize a docker postgres database instance */
-export const createDockerContainer = async () => {
+export const createPostgresDockerContainer = async () => {
   // create docker client
   const docker = new Dockerode();
 
@@ -22,46 +22,37 @@ export const createDockerContainer = async () => {
   });
   await container.start();
 
-  console.log("...postgres created successfully");
+  console.log("...postgres docker container created successfully");
 };
 
-const checkContainerExists = () => {
-  return new Promise((resolve, reject) => {
-    exec('docker ps -a --format "{{.Names}}"', (error, stdout) => {
-      if (error) {
-        reject(error);
-      }
+const checkPostgresContainerExists = async () => {
+  const command = 'docker ps -a --format "{{.Names}}"';
+  const result = await execAsync(command);
 
-      const containerNames = stdout.split("\n");
-      resolve(containerNames.includes(containerName));
-    });
-  });
-};
+  const containerNames = result.split("\n");
 
-const execAsync = (command: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout) => {
-      if (error) {
-        reject(error);
-      }
-
-      resolve(stdout);
-    });
-  });
+  return containerNames.includes(containerName);
 };
 
 const runContainer = async () => {
   const result = await execAsync(`docker start ${containerName}`);
-  console.log(`runContainer result -> ${result}`);
+
+  if (result.trim() === containerName) {
+    console.log("...postgres docker container running");
+  } else {
+    throw new Error("Expected container names to match but did not");
+  }
 };
 
 /* initalize a docker postgres database instance */
 export const startDockerContainer = async () => {
   try {
-    if (await checkContainerExists()) {
+    if (await checkPostgresContainerExists()) {
+      console.log("...postgres docker container already exists");
       runContainer();
     } else {
-      createDockerContainer();
+      console.log("...creating new postgres docker container");
+      createPostgresDockerContainer();
     }
   } catch (error) {
     console.error(error);

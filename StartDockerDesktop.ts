@@ -9,7 +9,7 @@ export const startDockerDesktop = async () => {
 
     console.log("...initializing docker desktop");
     await execAsync(command);
-    isDockerDesktopStarted();
+    await isDockerDesktopStarted();
   } catch (error) {
     console.error(`...initializing docker desktop failed -> ${error}`);
   }
@@ -28,7 +28,7 @@ const isDockerDesktopStarted = async () => {
         console.log("...docker desktop running");
       }
 
-      setTimeout(() => {}, 1000);
+      await new Promise((resolve) => setTimeout(resolve, 500));
     } catch {
       console.log("...docker desktop starting");
     }
