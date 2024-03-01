@@ -1,9 +1,9 @@
 import { startDockerDesktop } from "./StartDockerDesktop";
-import { startDockerContainer } from "./StartDockerContainer";
+import { startDockerContainer as startPostgresDockerContainer } from "./StartPostgresDockerContainer";
 
 const main = async () => {
   await startDockerDesktop();
-  await startDockerContainer();
+  await startPostgresDockerContainer();
 };
 
 main().catch((error) => {
