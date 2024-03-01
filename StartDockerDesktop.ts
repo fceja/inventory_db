@@ -7,9 +7,9 @@ export const startDockerDesktop = async () => {
         ? 'start /min "" "docker' // windows
         : "open -a Docker"; // macOs
 
+    console.log("...initializing docker desktop");
     await execAsync(command);
     isDockerDesktopStarted();
-    console.log("...initializing docker desktop");
   } catch (error) {
     console.error(`...initializing docker desktop failed -> ${error}`);
   }
