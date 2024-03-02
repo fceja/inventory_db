@@ -1,9 +1,15 @@
-import { startDockerDesktop } from "./StartDockerDesktop";
-import { startDockerContainer as startPostgresDockerContainer } from "./StartPostgresDockerContainer";
+import configData from "./config.json";
+import { DockerDesktopFuncs } from "./helpers/docker/DockerDesktopFuncs";
+import { DockerContainerFuncs } from "./helpers/docker/DockerContainerFuncs";
 
 const main = async () => {
-  await startDockerDesktop();
-  await startPostgresDockerContainer();
+  const dockerDektop = new DockerDesktopFuncs();
+  await dockerDektop.startDockerDesktop();
+
+  const dockerContainer = new DockerContainerFuncs(
+    configData.dockerConfig.containerConfig,
+  );
+  await dockerContainer.initPostgresContainer();
 };
 
 main().catch((error) => {

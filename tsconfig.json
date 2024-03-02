@@ -3,7 +3,12 @@
     "baseUrl": "./",
     "rootDir": "./",
     "outDir": "./dist",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
   "include": ["main.ts"]
 }
