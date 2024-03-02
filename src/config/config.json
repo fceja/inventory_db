@@ -2,9 +2,8 @@
   "dockerConfig": {
     "containerConfig": {
       "postgresConfig": {
-        "imageName": "postgres",
         "containerName": "my-postgres-container",
-        "pass": "POSTGRES_PASSWORD=mysecret"
+        "envData": "POSTGRES_PASSWORD=mysecret"
       }
     }
   }

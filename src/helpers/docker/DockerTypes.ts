@@ -1,7 +1,6 @@
 type PostgresConfigT = {
-  imageName: string;
   containerName: string;
-  pass: string;
+  envData: string;
 };
 
 export interface DockerContainerPostgresI {

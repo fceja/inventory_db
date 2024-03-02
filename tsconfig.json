@@ -9,9 +9,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@config/*": ["./config/*"],
+      "@config/*": ["./src/config/*"],
       "@helpers/*": ["./src/helpers/*"]
     }
   },
-  "include": ["./src/main.ts"]
+  "include": ["./src/config/*", "./src/helpers/*", "./src/main.ts"],
+  "exclude": ["./node_modules", "./dist"]
 }

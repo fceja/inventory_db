@@ -1,20 +1,16 @@
-import Dockerode from "dockerode";
-
 import { DockerContainerPostgresI } from "@helpers/docker/DockerTypes";
 import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
 
 export class DockerContainerPostgresFuncs implements DockerContainerPostgresI {
   postgresConfig = {
-    imageName: "",
     containerName: "",
-    pass: "",
+    envData: "",
   };
 
   constructor(props: DockerContainerPostgresI) {
     this.postgresConfig = {
-      imageName: props.postgresConfig.imageName,
       containerName: props.postgresConfig.containerName,
-      pass: props.postgresConfig.pass,
+      envData: props.postgresConfig.envData,
     };
   }
 
@@ -29,24 +25,17 @@ export class DockerContainerPostgresFuncs implements DockerContainerPostgresI {
   };
 
   /* creates and starts postgres docker container */
-  createAndStartPostgresContainer = async () => {
+  createPostgresContainer = async () => {
     try {
-      // create docker client
-      const docker = new Dockerode();
+      await executeShellCommand("docker pull postgres");
 
-      // pull postgres docker image
-      await docker.pull("postgres");
+      // create postgres container
+      await executeShellCommand(`docker create \
+          --name ${this.postgresConfig.containerName} \
+          --env ${this.postgresConfig.envData} \
+          postgres
+          `);
 
-      // create postgres docker container
-      const container = await docker.createContainer({
-        Image: this.postgresConfig.imageName,
-        name: this.postgresConfig.containerName,
-        Env: [this.postgresConfig.pass],
-        HostConfig: {},
-      });
-
-      // start container
-      await container.start();
       console.log("...postgres docker container created successfully");
     } catch (error) {
       console.error(error);
@@ -72,19 +61,19 @@ export class DockerContainerPostgresFuncs implements DockerContainerPostgresI {
     }
   };
 
-  /* initialized posgtres container */
+  /* initializes posgtres container */
   initPostgresContainer = async () => {
     // checks to see if postgres container already exists, otherwise it creates one
     try {
-      if (await this.checkPostgresContainerExists()) {
-        // postres container exits, run
-        console.log("...postgres docker container already exists");
-        this.startPostgresContainer();
-      } else {
-        // postres container does not exits, create
+      if (!(await this.checkPostgresContainerExists())) {
         console.log("...creating new postgres docker container");
-        this.createAndStartPostgresContainer();
+        await this.createPostgresContainer();
+      } else {
+        console.log("...postgres docker container already exists");
       }
+
+      console.log("...starting postgres docker container");
+      await this.startPostgresContainer();
     } catch (error) {
       console.error(error);
     }

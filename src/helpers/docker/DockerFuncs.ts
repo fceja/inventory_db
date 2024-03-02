@@ -2,12 +2,11 @@ import { DockerContainerPostgresFuncs } from "@helpers/docker/DockerContainerPos
 import { DockerDesktopFuncs } from "@helpers/docker/DockerDesktopFuncs";
 import { DockerI } from "@helpers/docker/DockerTypes";
 
-export class DockerFuncs implements DockerI {
+export default class DockerFuncs implements DockerI {
   containerConfig: {
     postgresConfig: {
-      imageName: "";
       containerName: "";
-      pass: "";
+      envData: "";
     };
   };
 
