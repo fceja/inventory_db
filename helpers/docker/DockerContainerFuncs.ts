@@ -1,16 +1,7 @@
 import Dockerode from "dockerode";
 
 import { executeShellCommand } from "../shell/ExecuteShellCommand";
-
-type PostgresConfigT = {
-  imageName: string;
-  containerName: string;
-  pass: string;
-};
-
-interface DockerContainerFuncsI {
-  postgresConfig: PostgresConfigT;
-}
+import { DockerContainerFuncsI } from "./DockerTypes";
 
 export class DockerContainerFuncs implements DockerContainerFuncsI {
   postgresConfig = {

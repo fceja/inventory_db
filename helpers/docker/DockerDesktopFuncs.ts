@@ -2,7 +2,7 @@ import { executeShellCommand } from "../shell/ExecuteShellCommand";
 
 export class DockerDesktopFuncs {
   /* starts docker desktop app */
-  startDockerDesktop = async () => {
+  initDockerDesktop = async () => {
     try {
       // execute docker command
       const command =
