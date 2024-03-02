@@ -1,5 +1,5 @@
-import configData from "./config.json";
-import { DockerFuncs } from "./helpers/docker/dockerFuncs";
+import configData from "@config/config.json";
+import { DockerFuncs } from "@helpers/docker/dockerFuncs";
 
 const main = async () => {
   const docker = new DockerFuncs(configData.dockerConfig);

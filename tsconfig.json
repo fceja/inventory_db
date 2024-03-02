@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "rootDir": "./",
     "outDir": "./dist",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "paths": {
+      "@config/*": ["./config/*"],
+      "@helpers/*": ["./src/helpers/*"]
+    }
   },
-  "include": ["main.ts"]
+  "include": ["./src/main.ts"]
 }

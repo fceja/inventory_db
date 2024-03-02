@@ -1,7 +1,7 @@
 import Dockerode from "dockerode";
 
-import { executeShellCommand } from "../shell/ExecuteShellCommand";
-import { DockerContainerPostgresI } from "./DockerTypes";
+import { DockerContainerPostgresI } from "@helpers/docker/DockerTypes";
+import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
 
 export class DockerContainerPostgresFuncs implements DockerContainerPostgresI {
   postgresConfig = {

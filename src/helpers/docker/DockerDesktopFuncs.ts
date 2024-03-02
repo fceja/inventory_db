@@ -1,4 +1,4 @@
-import { executeShellCommand } from "../shell/ExecuteShellCommand";
+import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
 
 export class DockerDesktopFuncs {
   /* starts docker desktop app */

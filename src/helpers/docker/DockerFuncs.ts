@@ -1,6 +1,6 @@
-import { DockerDesktopFuncs } from "./DockerDesktopFuncs";
-import { DockerContainerPostgresFuncs } from "./DockerContainerPostgresFuncs";
-import { DockerI } from "./DockerTypes";
+import { DockerContainerPostgresFuncs } from "@helpers/docker/DockerContainerPostgresFuncs";
+import { DockerDesktopFuncs } from "@helpers/docker/DockerDesktopFuncs";
+import { DockerI } from "@helpers/docker/DockerTypes";
 
 export class DockerFuncs implements DockerI {
   containerConfig: {
