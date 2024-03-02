@@ -1,2 +1,2 @@
 # run
-npx tsc -p tsconfig.json && node ./dist/main.js
+tsc && ts-node --require tsconfig-paths/register dist/main.js
