@@ -4,10 +4,10 @@ type PostgresConfigT = {
   pass: string;
 };
 
-export interface DockerContainerFuncsI {
+export interface DockerContainerPostgresI {
   postgresConfig: PostgresConfigT;
 }
 
-export interface DockerFuncsI {
-  containerConfig: DockerContainerFuncsI;
+export interface DockerI {
+  containerConfig: DockerContainerPostgresI;
 }

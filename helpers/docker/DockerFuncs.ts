@@ -1,8 +1,8 @@
 import { DockerDesktopFuncs } from "./DockerDesktopFuncs";
-import { DockerContainerFuncs } from "./DockerContainerFuncs";
-import { DockerFuncsI } from "./DockerTypes";
+import { DockerContainerPostgresFuncs } from "./DockerContainerPostgresFuncs";
+import { DockerI } from "./DockerTypes";
 
-export class DockerFuncs implements DockerFuncsI {
+export class DockerFuncs implements DockerI {
   containerConfig: {
     postgresConfig: {
       imageName: "";
@@ -10,11 +10,14 @@ export class DockerFuncs implements DockerFuncsI {
       pass: "";
     };
   };
-  dockerDesktop: DockerDesktopFuncs;
-  dockerContainer: DockerContainerFuncs;
 
-  constructor(props: DockerFuncsI) {
+  dockerDesktop: DockerDesktopFuncs;
+  dockerContainer: DockerContainerPostgresFuncs;
+
+  constructor(props: DockerI) {
     this.dockerDesktop = new DockerDesktopFuncs();
-    this.dockerContainer = new DockerContainerFuncs(props.containerConfig);
+    this.dockerContainer = new DockerContainerPostgresFuncs(
+      props.containerConfig,
+    );
   }
 }

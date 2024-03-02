@@ -1,16 +1,16 @@
 import Dockerode from "dockerode";
 
 import { executeShellCommand } from "../shell/ExecuteShellCommand";
-import { DockerContainerFuncsI } from "./DockerTypes";
+import { DockerContainerPostgresI } from "./DockerTypes";
 
-export class DockerContainerFuncs implements DockerContainerFuncsI {
+export class DockerContainerPostgresFuncs implements DockerContainerPostgresI {
   postgresConfig = {
     imageName: "",
     containerName: "",
     pass: "",
   };
 
-  constructor(props: DockerContainerFuncsI) {
+  constructor(props: DockerContainerPostgresI) {
     this.postgresConfig = {
       imageName: props.postgresConfig.imageName,
       containerName: props.postgresConfig.containerName,
