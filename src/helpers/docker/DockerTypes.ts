@@ -1,12 +1,4 @@
-type PostgresConfigT = {
-  containerName: string;
-  envData: string;
-};
+import { TPostgresConfig } from "@helpers/postgres/PostgresTypes";
 
-export interface DockerContainerPostgresI {
-  postgresConfig: PostgresConfigT;
-}
-
-export interface DockerI {
-  containerConfig: DockerContainerPostgresI;
-}
+export interface IDockerContainerPostgres extends TPostgresConfig {}
+export interface IDocker extends IDockerContainerPostgres {}
