@@ -1,8 +1,11 @@
 export type TPostgresConfig = {
   containerName: string;
-  envPgUser: string;
-  envPgPass: string;
+  pgUser: string;
+  pgPass: string;
   pgPort: string;
+  pgHost: string;
+  pgDefaultDatabase: string;
+  pgDatabase: string;
 };
 
 export interface IPostgres extends TPostgresConfig {}

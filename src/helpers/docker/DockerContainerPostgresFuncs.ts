@@ -3,14 +3,14 @@ import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
 
 export class DockerContainerPostgresFuncs {
   containerName = "";
-  envPgUser = "";
-  envPgPass = "";
+  pgUser = "";
+  pgPass = "";
   pgPort = "";
 
   constructor(props: IDockerContainerPostgres) {
     this.containerName = props.containerName;
-    this.envPgUser = props.envPgUser;
-    this.envPgPass = props.envPgPass;
+    this.pgUser = props.pgUser;
+    this.pgPass = props.pgPass;
     this.pgPort = props.pgPort;
   }
 
@@ -31,8 +31,8 @@ export class DockerContainerPostgresFuncs {
       // create postgres container
       await executeShellCommand(`docker create \
           --name ${this.containerName} \
-          --env POSTGRES_USER=${this.envPgUser} \
-          --env POSTGRES_PASSWORD=${this.envPgPass} \
+          --env POSTGRES_USER=${this.pgUser} \
+          --env POSTGRES_PASSWORD=${this.pgPass} \
           -p ${this.pgPort} \
           postgres
           `);

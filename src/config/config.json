@@ -1,5 +1,9 @@
 {
   "containerName": "my-postgres-container",
-  "envData": "POSTGRES_PASSWORD=mysecret",
-  "user": "postgres"
+  "pgUser": "postgres",
+  "pgPass": "mysecret",
+  "pgPort": "5432:5432",
+  "pgHost": "localhost",
+  "pgDefaultDatabase": "postgres",
+  "pgDatabase": "inventory_db"
 }
