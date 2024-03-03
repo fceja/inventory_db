@@ -1,9 +1,12 @@
 import assert from "assert";
+import knex, { Knex } from "knex";
+import { QueryResult } from "pg";
+
 import { IPostgres } from "@helpers/postgres/PostgresTypes";
-import { Pool, QueryResult } from "pg";
 
 export default class Postgres {
   containerName = "";
+  pgClient = "";
   pgUser = "";
   pgPass = "";
   pgHost = "";
@@ -11,10 +14,11 @@ export default class Postgres {
   pgDatabase = "";
   pgPort = "";
 
-  pool: Pool = null;
+  dbConn: Knex = null;
 
   constructor(props: IPostgres) {
     this.containerName = props.containerName;
+    this.pgClient = props.pgClient;
     this.pgUser = props.pgUser;
     this.pgPass = props.pgPass;
     this.pgHost = props.pgHost;
@@ -30,7 +34,7 @@ export default class Postgres {
           FROM pg_database;
           `;
 
-      const { rows }: QueryResult = await this.pool.query(query);
+      const { rows }: QueryResult = await this.dbConn.raw(query);
       const databases = rows.map((row) => row.datname);
 
       return databases.includes(this.pgDatabase);
@@ -42,27 +46,30 @@ export default class Postgres {
   };
 
   createDbConnection = async () => {
-    this.pool = new Pool({
-      user: this.pgUser,
-      host: this.pgHost,
-      database: this.pgDefaultDatabase,
-      password: this.pgPass,
-      port: Number(this.pgPort.split(":")[0]),
+    this.dbConn = knex({
+      client: this.pgClient,
+      connection: {
+        user: this.pgUser,
+        host: this.pgHost,
+        database: this.pgDefaultDatabase,
+        password: this.pgPass,
+        port: Number(this.pgPort.split(":")[0]),
+      },
     });
   };
 
   createDb = async () => {
     try {
       const query = `CREATE DATABASE ${this.pgDatabase}`;
-      await this.pool.query(query);
+      await this.dbConn.raw(query);
     } catch (error) {
       console.error(error);
     }
   };
 
   disconnectDb = async () => {
-    await this.pool.end();
-    this.pool = null;
+    await this.dbConn.destroy();
+    this.dbConn = null;
   };
 
   initDB = async () => {

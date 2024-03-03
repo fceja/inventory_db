@@ -1,5 +1,6 @@
 export type TPostgresConfig = {
   containerName: string;
+  pgClient: string;
   pgUser: string;
   pgPass: string;
   pgPort: string;

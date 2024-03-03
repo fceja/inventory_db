@@ -1,5 +1,6 @@
 {
   "containerName": "my-postgres-container",
+  "pgClient": "pg",
   "pgUser": "postgres",
   "pgPass": "mysecret",
   "pgPort": "5432:5432",
