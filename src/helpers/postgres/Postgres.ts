@@ -2,6 +2,7 @@ import assert from "assert";
 import knex, { Knex } from "knex";
 import { QueryResult } from "pg";
 
+import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
 import { IPostgres } from "@helpers/postgres/PostgresTypes";
 
 export default class Postgres {
@@ -13,6 +14,7 @@ export default class Postgres {
   pgDefaultDatabase = "";
   pgDatabase = "";
   pgPort = "";
+  knexFilePath = "";
 
   dbConn: Knex = null;
 
@@ -25,6 +27,7 @@ export default class Postgres {
     this.pgDefaultDatabase = props.pgDefaultDatabase;
     this.pgDatabase = props.pgDatabase;
     this.pgPort = props.pgPort;
+    this.knexFilePath = props.knexFilePath;
   }
 
   checkIfDbExists = async () => {
@@ -67,6 +70,15 @@ export default class Postgres {
     }
   };
 
+  runMigrations = async () => {
+    try {
+      const command = `npx knex migrate:latest --knexfile=${this.knexFilePath}`;
+      await executeShellCommand(command);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   disconnectDb = async () => {
     await this.dbConn.destroy();
     this.dbConn = null;
@@ -83,8 +95,11 @@ export default class Postgres {
       } else {
         console.log(`...creating new db`);
         await this.createDb();
+        console.log(`...applying migrations`);
+        await this.runMigrations();
       }
       assert.equal(true, await this.checkIfDbExists());
+      console.log(`...db running`);
 
       // disconnect from db
       await this.disconnectDb();

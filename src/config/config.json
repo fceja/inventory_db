@@ -6,5 +6,6 @@
   "pgPort": "5432:5432",
   "pgHost": "localhost",
   "pgDefaultDatabase": "postgres",
-  "pgDatabase": "inventory_db"
+  "pgDatabase": "inventory_db",
+  "knexFilePath": "./src/config/knexConfig.ts"
 }

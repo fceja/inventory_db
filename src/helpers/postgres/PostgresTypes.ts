@@ -7,6 +7,7 @@ export type TPostgresConfig = {
   pgHost: string;
   pgDefaultDatabase: string;
   pgDatabase: string;
+  knexFilePath: string;
 };
 
 export interface IPostgres extends TPostgresConfig {}
