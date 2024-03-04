@@ -79,6 +79,15 @@ export default class Postgres {
     }
   };
 
+  runSeeds = async () => {
+    try {
+      const command = `npx knex seed:run --knexfile=${this.knexFilePath}`;
+      await executeShellCommand(command);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   disconnectDb = async () => {
     await this.dbConn.destroy();
     this.dbConn = null;
@@ -95,8 +104,12 @@ export default class Postgres {
       } else {
         console.log(`...creating new db`);
         await this.createDb();
+
         console.log(`...applying migrations`);
         await this.runMigrations();
+
+        console.log(`...applying seeds`);
+        await this.runSeeds();
       }
       assert.equal(true, await this.checkIfDbExists());
       console.log(`...db running`);
