@@ -3,7 +3,7 @@ import type { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("products", (table) => {
     table.increments("id").primary();
-    table.smallint("category_id").notNullable();
+    table.smallint("categories_id");
     table.string("bar_code", 50);
     table.string("sku_code", 50);
     table.string("qr_code", 50);
