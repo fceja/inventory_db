@@ -1,6 +1,6 @@
 # Description
 
-Sets up a PostgreSQL database for an inventory management application, including table creation and establishing relationships.
+Sets up a Docker container with PostgreSQL database for an inventory management application, including table creation and establishing relationships. It either creates a new database or initializes an existing one.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Sets up a PostgreSQL database for an inventory management application, including
 4. Install dependencies:
    - `npm install`
 
-## Start PostgreSql database
+## Init Docker container with PostgreSql
 
 1. Initiate a new or existing PostgreSQL database:
    - `tsc && ts-node --require tsconfig-paths/register dist/main.js`
