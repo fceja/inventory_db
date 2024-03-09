@@ -4,13 +4,13 @@ export class DockerDesktopFuncs {
   /* starts docker desktop app */
   startDockerDesktop = async () => {
     try {
-      // shell command
+      // shell command to start docker desktop app
       const command =
         process.platform === "win32"
           ? 'start /min "" "docker' // windows
           : "open -a Docker"; // macOs
 
-      // execute docker shell command
+      // execute shell command
       console.log("...initializing docker desktop");
       await executeShellCommand(command);
 
@@ -27,10 +27,10 @@ export class DockerDesktopFuncs {
     let success = false;
     while (!success) {
       try {
-        // shell command
+        // shell command to retrieve docker environment info
         const command = "docker info";
 
-        // execute docker shell command
+        // execute shell command
         const result = await executeShellCommand(command);
 
         // if "Client" returned, means docker desktop is running

@@ -1,4 +1,4 @@
-import { DockerContainerPostgresFuncs } from "@helpers/docker/DockerContainerPostgresFuncs";
+import { PostgresDockerContainerFuncs } from "@helpers/docker/DockerContainerPostgresFuncs";
 import { DockerDesktopFuncs } from "@helpers/docker/DockerDesktopFuncs";
 
 /**
@@ -7,10 +7,10 @@ import { DockerDesktopFuncs } from "@helpers/docker/DockerDesktopFuncs";
  */
 export default class DockerFuncs {
   dockerDesktop: DockerDesktopFuncs;
-  dockerContainer: DockerContainerPostgresFuncs;
+  postgresDockerContainer: PostgresDockerContainerFuncs;
 
   constructor() {
     this.dockerDesktop = new DockerDesktopFuncs();
-    this.dockerContainer = new DockerContainerPostgresFuncs();
+    this.postgresDockerContainer = new PostgresDockerContainerFuncs();
   }
 }

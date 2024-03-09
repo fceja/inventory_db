@@ -1,6 +1,26 @@
 import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
 
-export class DockerContainerPostgresFuncs {
+export class PostgresDockerContainerFuncs {
+  /* initializes postgres docker container */
+  init = async () => {
+    try {
+      // check if postgres docker container already exists, otherwise it creates one
+      const exists = await this.checkIfPostgresDockerContainerExists();
+
+      if (!exists) {
+        console.log("...creating new postgres docker container");
+        await this.createPostgresDockerContainer();
+      } else {
+        console.log("...postgres docker container already exists");
+      }
+
+      console.log("...starting postgres docker container");
+      await this.startPostgresDockerContainer();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   /* checks if postgres docker exists */
   checkIfPostgresDockerContainerExists = async () => {
     // shell command to retrieve existing docker containers
@@ -62,26 +82,6 @@ export class DockerContainerPostgresFuncs {
       console.log("...postgres docker container running");
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  /* initializes postgres docker container */
-  initPostgresDockerContainer = async () => {
-    try {
-      // check if postgres docker container already exists, otherwise it creates one
-      const exists = await this.checkIfPostgresDockerContainerExists();
-
-      if (!exists) {
-        console.log("...creating new postgres docker container");
-        await this.createPostgresDockerContainer();
-      } else {
-        console.log("...postgres docker container already exists");
-      }
-
-      console.log("...starting postgres docker container");
-      await this.startPostgresDockerContainer();
-    } catch (error) {
-      console.error(error);
     }
   };
 }
