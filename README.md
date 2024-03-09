@@ -16,6 +16,11 @@ Sets up a Docker container with PostgreSQL database for an inventory management 
 4. Install dependencies:
    - `npm install`
 
+5. Create `.env` file at project root with project environment variables
+   - sample environment file is provided at project root, you can simply rename this file for this to work
+      - rename `.env.sample` file to -> `.env`
+      - modify as needed
+     
 ## Init Docker container with PostgreSql
 
 1. Initiate a new or existing PostgreSQL database:
