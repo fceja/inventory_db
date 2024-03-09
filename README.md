@@ -1,18 +1,20 @@
-# run
+## Description
+Sets up a PostgreSQL database for an inventory management application, including table creation and establishing relationships.
 
-tsc && ts-node --require tsconfig-paths/register dist/main.js
 
-// create migration file
-npx knex migrate:make create_products_table --knexfile=./src/config/knexConfig.ts
+## Installation
+1. Clone repo
+   
+2. Install Node:
+    - `https://nodejs.org/en/download`
 
-// apply all pending migrations
-npx knex migrate:latest --knexfile=./src/config/knexConfig.ts
+3. Install Docker:
+    - `https://docs.docker.com/get-docker/`
 
-// roll back to last migration
-npx knex migrate:rollback --knexfile=./src/config/knexConfig.ts
+4. Install dependencies:
+    - `npm install`
 
-// roll back all applied migrations
-npx knex migrate:rollback --all --knexfile=./src/config/knexConfig.ts
 
-// roll back to a specific migration
-npx knex migrate:rollback --to=<migration_file_name> --knexfile=./src/config/knexConfig.ts
+## Start PostgreSql database
+1. Initiate a new or existing PostgreSQL database:
+    - `tsc && ts-node --require tsconfig-paths/register dist/main.js`
