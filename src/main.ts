@@ -3,7 +3,7 @@ import Postgres from "@helpers/postgres/Postgres";
 import dotenv from "dotenv";
 
 // apply env vars
-dotenv.config();
+dotenv.config({ path: ".env.sample" });
 
 const main = async () => {
   const docker = new DockerFuncs();
