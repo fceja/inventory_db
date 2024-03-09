@@ -16,6 +16,9 @@ export class PostgresDockerContainerFuncs {
 
       console.log("...starting postgres docker container");
       await this.startPostgresDockerContainer();
+
+      console.log("...waiting for postgres docker container to load");
+      await this.waitUntilPostgresLoaded();
     } catch (error) {
       console.error(error);
     }
@@ -78,10 +81,35 @@ export class PostgresDockerContainerFuncs {
       if (!(result.trim() === process.env.DOCKER_CONTAINER_NAME)) {
         throw new Error("Returned container name did not match expected.");
       }
-
-      console.log("...postgres docker container running");
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
+  };
+
+  waitUntilPostgresLoaded = async () => {
+    const command = `docker exec ${process.env.DOCKER_CONTAINER_NAME} pg_isready`;
+
+    const maxRetries = 10;
+    let retries = 0;
+    let isLoaded = false;
+    while (retries < maxRetries) {
+      try {
+        const stdOut = await executeShellCommand(command);
+
+        if (stdOut.includes("accepting connections")) {
+          isLoaded = true;
+          break;
+        }
+      } catch {
+        console.log(`...loading`);
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        retries++;
+      }
+    }
+
+    if (!isLoaded) throw new Error("Error loading postgres docker container.");
+
+    console.log("...postgres docker container running");
   };
 }

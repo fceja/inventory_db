@@ -38,24 +38,28 @@ export default class Postgres {
 
       return databases.includes(process.env.POSTGRES_DB);
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
 
     return false;
   };
 
   createConnection = async () => {
-    // create connection to postgres
-    this.dbConn = knex({
-      client: process.env.POSTGRES_CLIENT,
-      connection: {
-        user: process.env.POSTGRES_USER,
-        host: process.env.POSTGRES_HOST,
-        database: process.env.POSTGRES_DEFAULT_DB,
-        password: process.env.POSTGRES_PASSWORD,
-        port: Number(process.env.POSTGRES_PORT.split(":")[0]),
-      },
-    });
+    try {
+      // create connection to postgres
+      this.dbConn = knex({
+        client: process.env.POSTGRES_CLIENT,
+        connection: {
+          user: process.env.POSTGRES_USER,
+          host: process.env.POSTGRES_HOST,
+          database: process.env.POSTGRES_DEFAULT_DB,
+          password: process.env.POSTGRES_PASSWORD,
+          port: Number(process.env.POSTGRES_PORT.split(":")[0]),
+        },
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   createDb = async () => {

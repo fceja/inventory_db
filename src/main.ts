@@ -12,6 +12,8 @@ const main = async () => {
 
   const postgres = new Postgres();
   await postgres.init();
+
+  console.log("...done");
 };
 
 main().catch((error) => {
