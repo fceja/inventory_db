@@ -1,14 +1,12 @@
-import configData from "./config.json";
-
 module.exports = {
   development: {
-    client: configData.pgClient,
+    client: process.env.POSTGRES_CLIENT,
     connection: {
-      user: configData.pgUser,
-      password: configData.pgPass,
-      host: configData.pgHost,
-      port: Number(configData.pgPort.split(":")[0]),
-      database: configData.pgDatabase,
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      host: process.env.POSTGRES_HOST,
+      port: Number(process.env.POSTGRES_PORT.split(":")[0]),
+      database: process.env.POSTGRES_DB,
     },
     migrations: {
       directory: "../db/migrations",

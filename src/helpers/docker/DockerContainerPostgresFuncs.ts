@@ -1,26 +1,13 @@
-import { IDockerContainerPostgres } from "@helpers/docker/DockerTypes";
 import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
 
 export class DockerContainerPostgresFuncs {
-  containerName = "";
-  pgUser = "";
-  pgPass = "";
-  pgPort = "";
-
-  constructor(props: IDockerContainerPostgres) {
-    this.containerName = props.containerName;
-    this.pgUser = props.pgUser;
-    this.pgPass = props.pgPass;
-    this.pgPort = props.pgPort;
-  }
-
   /* checks if postgres docker exists */
   checkPostgresContainerExists = async () => {
     const command = 'docker ps -a --format "{{.Names}}"';
     const result = await executeShellCommand(command);
     const containerNames = result.split("\n");
 
-    return containerNames.includes(this.containerName);
+    return containerNames.includes(process.env.DOCKER_CONTAINER_NAME);
   };
 
   /* creates and starts postgres docker container */
@@ -30,10 +17,10 @@ export class DockerContainerPostgresFuncs {
 
       // create postgres container
       await executeShellCommand(`docker create \
-          --name ${this.containerName} \
-          --env POSTGRES_USER=${this.pgUser} \
-          --env POSTGRES_PASSWORD=${this.pgPass} \
-          -p ${this.pgPort} \
+          --name ${process.env.DOCKER_CONTAINER_NAME} \
+          --env POSTGRES_USER=${process.env.POSTGRES_USER} \
+          --env POSTGRES_PASSWORD=${process.env.POSTGRES_PASSWORD} \
+          -p ${process.env.POSTGRES_PORT} \
           postgres
           `);
 
@@ -48,11 +35,11 @@ export class DockerContainerPostgresFuncs {
     try {
       // execute docker comand
       const result = await executeShellCommand(
-        `docker start ${this.containerName}`,
+        `docker start ${process.env.DOCKER_CONTAINER_NAME}`,
       );
 
       // check if out container is returned (running)
-      if (result.trim() === this.containerName) {
+      if (result.trim() === process.env.DOCKER_CONTAINER_NAME) {
         console.log("...postgres docker container running");
       } else {
         throw new Error("Expected container names to match but did not");

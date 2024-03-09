@@ -3,32 +3,9 @@ import knex, { Knex } from "knex";
 import { QueryResult } from "pg";
 
 import { executeShellCommand } from "@helpers/shell/ExecuteShellCommand";
-import { IPostgres } from "@helpers/postgres/PostgresTypes";
 
 export default class Postgres {
-  containerName = "";
-  pgClient = "";
-  pgUser = "";
-  pgPass = "";
-  pgHost = "";
-  pgDefaultDatabase = "";
-  pgDatabase = "";
-  pgPort = "";
-  knexFilePath = "";
-
   dbConn: Knex = null;
-
-  constructor(props: IPostgres) {
-    this.containerName = props.containerName;
-    this.pgClient = props.pgClient;
-    this.pgUser = props.pgUser;
-    this.pgPass = props.pgPass;
-    this.pgHost = props.pgHost;
-    this.pgDefaultDatabase = props.pgDefaultDatabase;
-    this.pgDatabase = props.pgDatabase;
-    this.pgPort = props.pgPort;
-    this.knexFilePath = props.knexFilePath;
-  }
 
   checkIfDbExists = async () => {
     try {
@@ -40,7 +17,7 @@ export default class Postgres {
       const { rows }: QueryResult = await this.dbConn.raw(query);
       const databases = rows.map((row) => row.datname);
 
-      return databases.includes(this.pgDatabase);
+      return databases.includes(process.env.POSTGRES_DB);
     } catch (error) {
       console.error(error);
     }
@@ -50,20 +27,20 @@ export default class Postgres {
 
   createDbConnection = async () => {
     this.dbConn = knex({
-      client: this.pgClient,
+      client: process.env.POSTGRES_CLIENT,
       connection: {
-        user: this.pgUser,
-        host: this.pgHost,
-        database: this.pgDefaultDatabase,
-        password: this.pgPass,
-        port: Number(this.pgPort.split(":")[0]),
+        user: process.env.POSTGRES_USER,
+        host: process.env.POSTGRES_HOST,
+        database: process.env.POSTGRES_DEFAULT_DB,
+        password: process.env.POSTGRES_PASSWORD,
+        port: Number(process.env.POSTGRES_PORT.split(":")[0]),
       },
     });
   };
 
   createDb = async () => {
     try {
-      const query = `CREATE DATABASE ${this.pgDatabase}`;
+      const query = `CREATE DATABASE ${process.env.POSTGRES_DB}`;
       await this.dbConn.raw(query);
     } catch (error) {
       console.error(error);
@@ -72,7 +49,7 @@ export default class Postgres {
 
   runMigrations = async () => {
     try {
-      const command = `npx knex migrate:latest --knexfile=${this.knexFilePath}`;
+      const command = `npx knex migrate:latest --knexfile=${process.env.KNEX_FILE_PATH}`;
       await executeShellCommand(command);
     } catch (error) {
       console.error(error);
@@ -81,7 +58,7 @@ export default class Postgres {
 
   runSeeds = async () => {
     try {
-      const command = `npx knex seed:run --knexfile=${this.knexFilePath}`;
+      const command = `npx knex seed:run --knexfile=${process.env.KNEX_FILE_PATH}`;
       await executeShellCommand(command);
     } catch (error) {
       console.error(error);
@@ -112,7 +89,7 @@ export default class Postgres {
         await this.runSeeds();
       }
       assert.equal(true, await this.checkIfDbExists());
-      console.log(`...db running`);
+      console.log(`...db created`);
 
       // disconnect from db
       await this.disconnectDb();
