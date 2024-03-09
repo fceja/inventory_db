@@ -25,7 +25,7 @@ export default class Postgres {
     return false;
   };
 
-  createDbConnection = async () => {
+  createConnection = async () => {
     this.dbConn = knex({
       client: process.env.POSTGRES_CLIENT,
       connection: {
@@ -70,10 +70,10 @@ export default class Postgres {
     this.dbConn = null;
   };
 
-  initDB = async () => {
+  createDbAndApplyConfig = async () => {
     try {
-      // initiate db connection
-      await this.createDbConnection();
+      // initiate connection to postgres
+      await this.createConnection();
 
       // check if db exists, else create
       if (await this.checkIfDbExists()) {
@@ -90,11 +90,11 @@ export default class Postgres {
       }
       assert.equal(true, await this.checkIfDbExists());
       console.log(`...db created`);
-
-      // disconnect from db
-      await this.disconnectDb();
     } catch (error) {
       console.error("Error connecting to Postgres:", error);
+    } finally {
+      // disconnect from db
+      await this.disconnectDb();
     }
   };
 }

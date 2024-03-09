@@ -11,7 +11,7 @@ const main = async () => {
   await docker.dockerContainer.initPostgresContainer();
 
   const postgres = new Postgres();
-  await postgres.initDB();
+  await postgres.createDbAndApplyConfig();
 };
 
 main().catch((error) => {
