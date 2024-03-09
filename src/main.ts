@@ -7,8 +7,8 @@ dotenv.config();
 
 const main = async () => {
   const docker = new DockerFuncs();
-  await docker.dockerDesktop.initDockerDesktop();
-  await docker.dockerContainer.initPostgresContainer();
+  await docker.dockerDesktop.startDockerDesktop();
+  await docker.dockerContainer.initPostgresDockerContainer();
 
   const postgres = new Postgres();
   await postgres.createDbAndApplyConfig();
