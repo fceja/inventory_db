@@ -18,7 +18,7 @@ Sets up a Docker container with PostgreSQL database for an inventory management 
 
 Note: sample environment file is provided at project root, modify as needed
 
-## Init Docker container with PostgreSql
+## Init PostgreSQL Docker Container
 
-1. Initiate a new or existing PostgreSQL database:
+1. Initiate a new or existing PostgreSQL database for inventory app:
    - `tsc && ts-node --require tsconfig-paths/register dist/main.js`
