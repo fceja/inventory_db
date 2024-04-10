@@ -5,6 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments("item_id").primary();
     table.integer("parent_folder_id").notNullable();
     table.string("name", 100).notNullable().unique();
+    table.string("node_type", 20).notNullable().defaultTo('item').checkIn(['item'], 'node_type');
 
     // timestamps creates `created_at` and `updated_at` columns
     table.timestamps(true, true);
