@@ -1,17 +1,16 @@
 import type { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable("system_users", (table) => {
-    table.increments("system_user_id").primary();
+  return knex.schema.createTable("systemUsers", (table) => {
+    table.dateTime("createdAt").defaultTo(knex.fn.now()).notNullable();
     table.string("email", 100).notNullable();
     table.string("password", 100).notNullable();
     table.string("role", 20).notNullable();
-
-    // timestamps creates `created_at` and `updated_at` columns
-    table.timestamps(true, true);
+    table.increments("systemUserId").primary();
+    table.dateTime("updatedAt").defaultTo(knex.fn.now()).notNullable();
   });
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTableIfExists("system_users");
+  return knex.schema.dropTableIfExists("systemUsers");
 }

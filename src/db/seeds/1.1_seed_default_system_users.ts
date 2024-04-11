@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import type { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
-  return knex("system_users").insert([
+  return knex("systemUsers").insert([
     {
       email: "admin@email.com",
       password: await bcrypt.hash("admin", 10),
