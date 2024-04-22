@@ -9,27 +9,27 @@ export async function seed(knex: Knex): Promise<void> {
     },
     {
       parentFolderId: 0,
-      name: "Folder 1",
+      name: "Folder 1 - Web Store",
     },
     {
       parentFolderId: 0,
-      name: "Folder 2",
+      name: "Folder 2 - Merch",
     },
     {
       parentFolderId: 1,
-      name: "Folder 3",
+      name: "Folder 3 - Warehouse ",
     },
     {
       parentFolderId: 2,
-      name: "Folder 4",
+      name: "Folder 4 - Shirts",
     },
     {
       parentFolderId: 2,
-      name: "Folder 5",
+      name: "Folder 5 - Sweatshirt",
     },
     {
       parentFolderId: 3,
-      name: "Folder 6",
+      name: "Folder 6 - Isle A",
     },
   ]);
 }
