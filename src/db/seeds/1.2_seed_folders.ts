@@ -13,22 +13,22 @@ export async function seed(knex: Knex): Promise<void> {
     },
     {
       parentFolderId: 0,
-      name: "Folder 2 - Merch",
+      name: "Folder 2 - Warehouse",
     },
     {
       parentFolderId: 1,
-      name: "Folder 3 - Warehouse ",
-    },
-    {
-      parentFolderId: 2,
-      name: "Folder 4 - Shirts",
-    },
-    {
-      parentFolderId: 2,
-      name: "Folder 5 - Sweatshirt",
+      name: "Folder 3 - Merch ",
     },
     {
       parentFolderId: 3,
+      name: "Folder 4 - Shirts",
+    },
+    {
+      parentFolderId: 3,
+      name: "Folder 5 - Sweatshirt",
+    },
+    {
+      parentFolderId: 2,
       name: "Folder 6 - Isle A",
     },
   ]);
