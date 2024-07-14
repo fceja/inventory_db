@@ -1,5 +1,5 @@
 # Description
-Sets up a Docker container with PostgreSQL database for an Inventory App. <br/> 
+Sets up a Docker container with PostgreSQL database for Inventory App. <br/> 
 Includes table creation and establishing relationships. <br/>
 
 <br/>
