@@ -14,12 +14,11 @@ This project works together with the following repositories:
    - ```
      https://nodejs.org/en/download
      ```
-2. Clone repo
-3. Install Docker:
+2. Install Docker:
    - ```
      https://docs.docker.com/get-docker/
      ```
-
+3. Clone repo
 4. Install dependencies:
    - ```
      npm install
