@@ -9,6 +9,7 @@ This project works together with the following repositories:
 - Backend - https://github.com/fceja/inventory_api
 
 ## Installation
+![](https://img.shields.io/badge/OS-Linux%20%7C%20MacOS%20%7C%20Windows-eaeaea)
 1. Install Node:
    - ```
      https://nodejs.org/en/download
