@@ -2,6 +2,8 @@
 Sets up a Docker container with PostgreSQL database for Inventory App. <br/> 
 Includes table creation and establishing relationships. <br/>
 
+** Currently under development. **
+
 <br/>
 
 This project works together with the following repositories:
